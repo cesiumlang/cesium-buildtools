@@ -4,5 +4,12 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.watcherExclude": {
+			"clang+llvm-*/": true,
+			"llvm-*/": true,
+			"bin/cmake-*-windows-x86_64/**": true,
+			"build/CMakeFiles/**": true,
+		}
+	}
 }

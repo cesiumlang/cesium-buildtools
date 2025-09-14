@@ -72,7 +72,9 @@ if exist %CC_WIN% (for /F "tokens=*" %%g in ('%CC_WIN% --version') do (set LLVM_
 if not "%LLVM_VER_TMP%" == "%LLVM_VERSION%" (
   if not exist %LLVM_ZIP_WIN% (curl -o %LLVM_ZIP_WIN% -L https://github.com/llvm/llvm-project/releases/download/llvmorg-%LLVM_VERSION%/%LLVM_LONGNAME%.tar.xz || goto :curlfail)
   if exist %LLVM_WIN% (rmdir /S /Q %LLVM_WIN%)
+  echo tar extracting LLVM...
   tar -xmSf %LLVM_ZIP_WIN% || goto :tarfail
+  echo move tar
   move %LLVM_LONGNAME% %LLVM_NAME%
 )
 
