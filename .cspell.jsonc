@@ -1,0 +1,41 @@
+{
+  "version": "0.2",
+  "import": [
+      // ".cspell/cesium/cspell-ext.json"
+  ],
+  "ignorePaths": [
+    ".cspell.jsonc",
+    ".cspell/**",
+    ".git/**",
+    "*.code-workspace",
+    ".local-gitignore"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "project-words",
+      "path": ".vscode/ltex.dictionary.en-US.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": [
+    "bash",
+    "win32",
+    "scientific-terms-us",
+    // "cesium",
+    "project-words",
+  ],
+  "words": [
+    "checkcmake",
+    "CMake",
+    "cmakefail",
+    "mklink",
+    "WINSYS32"
+  ],
+  "ignoreWords": [
+
+  ],
+  "ignoreRegExpList": [
+    "/-D.*/",
+    "/-W.*/",
+  ]
+}
