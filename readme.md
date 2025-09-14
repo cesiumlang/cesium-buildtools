@@ -4,15 +4,15 @@ A collection of scripts to automate building the [Cesium](https://cesiumlang.org
 
 Currently, this is only written for Windows, but eventually it will also support other platforms.
 
-The scripts in this repo address
-<!-- cloning the [Cesium source repo](https://github.com/cesiumlang/cesium.git) (as a submodule),  -->
+The scripts in this repo address<!-- cloning the [Cesium source repo](https://github.com/cesiumlang/cesium.git) (as a submodule),  -->
 downloading portable versions of CMake, Ninja, and LLVM as necessary.
 <!-- and then checks out a known good commit of Cesium to do the build.   -->
 It also locally sets `$PATH` to a minimal set of values due to issues with other libraries installed on the machine polluting the build.
 
 ## Usage
 
-1. Run `get-buildtools`, which will set up the build environment.
+1. Install the [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/).
+2. Run `get-buildtools`, which will set up the build environment.
 
 ## Background
 
