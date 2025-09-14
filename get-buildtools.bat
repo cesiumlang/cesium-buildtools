@@ -58,8 +58,8 @@ set "NINJA_ZIP_WIN=%NINJA_ZIP:/=\%"
 
 mkdir %DOWNLOADS_WIN%
 mkdir %ROOTBIN_WIN%
-mkdir %ROOTBUILD_WIN%
-mklink /d %ROOTBUILD_WIN%\lib %CESIUM_SRC_WIN%\lib
+@REM mkdir %ROOTBUILD_WIN%
+@REM mklink /d %ROOTBUILD_WIN%\lib %CESIUM_SRC_WIN%\lib
 
 :: set PATH to a very minimal set of values to limit bad dependency resolution
 :: I think something in my path on work laptop is polluting dependencies,
