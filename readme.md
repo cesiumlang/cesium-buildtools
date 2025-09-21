@@ -11,8 +11,8 @@ It also locally sets `$PATH` to a minimal set of values due to issues with other
 
 ## Usage
 
-1. Install the [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/).
-2. Run `get-buildtools`, which will set up the build environment.
+<!-- 1. Install the [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/). -->
+1. Run `get-buildtools`, which will set up the build environment.
 
 ## Background
 

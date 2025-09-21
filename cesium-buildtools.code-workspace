@@ -8,6 +8,8 @@
 		"files.watcherExclude": {
 			"clang+llvm-*/": true,
 			"llvm-*/": true,
+			"bin/zig-*/": true,
+			"bin/zig-x86_64-windows-*/": true,
 			"bin/cmake-*-windows-x86_64/**": true,
 			"bin/cmake-*/**": true,
 			"build/CMakeFiles/**": true,
