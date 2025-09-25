@@ -78,7 +78,7 @@ mkdir %ROOTBIN_WIN%
 :: probably zlib since that has caused problems for me in the past on this PC
 set WINSYS32=%SystemRoot%\System32
 @REM set PATH=%ROOTBIN_WIN%;%ROOTBIN_WIN%\%CMAKE_NAME%\bin;%WINSYS32%;%SystemRoot%;%WINSYS32%\Wbem;%WINSYS32%\WindowsPowerShell\v1.0\;%WINSYS32%\OpenSSH\;%ProgramFiles%\dotnet\;%LOCALAPPDATA%\Microsoft\WindowsApps;%LOCALAPPDATA%\Programs\Git\bin;%ProgramFiles%\Git\cmd
-set PATH=%ROOTBIN_WIN%;%ZIG_DIR_WIN%;%WINSYS32%;%SystemRoot%;%WINSYS32%\Wbem;%WINSYS32%\WindowsPowerShell\v1.0\;%WINSYS32%\OpenSSH\;%ProgramFiles%\dotnet\;%LOCALAPPDATA%\Microsoft\WindowsApps;%LOCALAPPDATA%\Programs\Git\bin;%ProgramFiles%\Git\cmd
+set PATH=%ROOTBIN_WIN%;%CMAKE_DIR_WIN%\bin;%ZIG_DIR_WIN%;%WINSYS32%;%SystemRoot%;%WINSYS32%\Wbem;%WINSYS32%\WindowsPowerShell\v1.0\;%WINSYS32%\OpenSSH\;%ProgramFiles%\dotnet\;%LOCALAPPDATA%\Microsoft\WindowsApps;%LOCALAPPDATA%\Programs\Git\bin;%ProgramFiles%\Git\cmd
 
 set LLVM_VER_TMP=
 if exist %CC_WIN% (for /F "tokens=*" %%g in ('%CC_WIN% --version') do (set LLVM_VER_TMP=%%g))
