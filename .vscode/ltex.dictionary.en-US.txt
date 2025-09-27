@@ -1,7 +1,9 @@
 buildtools
 cesium-buildtools
+checkllvm
 DEFAULTTEXT
 GREENTEXT
+lunarg
 msvc
 REDTEXT
 winify

@@ -7,5 +7,5 @@
 
 :: see: https://stackoverflow.com/a/33404867/13230486
 set retval=%~f1
-echo %retval%
+@REM echo %retval%
 exit /b

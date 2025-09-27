@@ -15,7 +15,7 @@ set CMAKE_ZIP=%DOWNLOADS_WIN%/%CMAKE_NAME%.zip
 call utils\normalize_path %CMAKE_ZIP%
 set CMAKE_ZIP_WIN=%retval%
 
-set CMAKE_DIR=%ROOTBIN%/%CMAKE_NAME%
+set CMAKE_DIR=%ROOTOPT%/%CMAKE_NAME%
 call utils\normalize_path %CMAKE_DIR%
 set CMAKE_DIR_WIN=%retval%
 

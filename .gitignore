@@ -4,3 +4,4 @@
 /llvm-*/
 /clang+llvm-*-x86_64-pc-windows-msvc/
 /build/
+/opt/

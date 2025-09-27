@@ -11,7 +11,7 @@ set LLVM_NAME=llvm-%LLVM_VERSION%
 :: Make sure to use forward slashes (/) for all path separators
 :: (otherwise CMake will try to interpret backslashes as escapes and fail).
 :: We will assume all paths are POSIX except those ending in `_WIN`.
-set LLVM=%ROOT%/%LLVM_NAME%
+set LLVM=%ROOTOPT%/%LLVM_NAME%
 call utils\normalize_path %LLVM%
 set LLVM_WIN=%retval%
 
@@ -33,6 +33,7 @@ if not "%LLVM_VER_TMP%" == "%LLVM_VERSION%" (
   echo %YELLOWTEXT%Clang version does not match.  Setting up LLVM.%DEFAULTTEXT%
   if not exist %LLVM_ZIP_WIN% (curl -o %LLVM_ZIP_WIN% -L https://github.com/llvm/llvm-project/releases/download/llvmorg-%LLVM_VERSION%/%LLVM_LONGNAME%.tar.xz || goto :curlfail)
   if exist %LLVM_WIN% (rmdir /S /Q %LLVM_WIN%)
+  cd %ROOTOPT_WIN%
   echo tar extracting LLVM...
   tar -xmSf %LLVM_ZIP_WIN% || goto :tarfail
   echo move tar

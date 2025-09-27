@@ -22,7 +22,6 @@ if not "%NINJA_VER_TMP%" == "%NINJA_VERSION%" (
   if not exist %NINJA_ZIP_WIN% (curl -o %NINJA_ZIP_WIN% -L https://github.com/ninja-build/ninja/releases/download/v%NINJA_VERSION%/ninja-win.zip || goto :curlfail)
   cd %ROOTBIN_WIN%
   tar -xmSf %NINJA_ZIP_WIN% || goto :tarfail
-  cd %ROOT_WIN%
 )
 goto :success
 

@@ -8,6 +8,7 @@ set INCLUDE_LLVM=1
 set INCLUDE_NINJA=1
 set INCLUDE_ZIG=1
 set INCLUDE_QT=0
+set INCLUDE_VULKAN=1
 
 set EXPORT_PATH=0
 set LASTARG=
@@ -34,6 +35,10 @@ set ROOTBIN=%ROOT%/bin
 call utils\normalize_path %ROOTBIN%
 set ROOTBIN_WIN=%retval%
 
+set ROOTOPT=%ROOT%/opt
+call utils\normalize_path %ROOTOPT%
+set ROOTOPT_WIN=%retval%
+
 set DOWNLOADS=%ROOT%/downloads
 call utils\normalize_path %DOWNLOADS%
 set DOWNLOADS_WIN=%retval%
@@ -59,6 +64,7 @@ if %INCLUDE_LLVM%==1 (call setup\llvm || goto :fail)
 if %INCLUDE_NINJA%==1 (call setup\ninja || goto :fail)
 if %INCLUDE_ZIG%==1 (call setup\zig || goto :fail)
 if %INCLUDE_QT%==1 (call setup\qt || goto :fail)
+if %INCLUDE_VULKAN%==1 (call setup\vulkan || goto :fail)
 
 :: for now, just download and then exit
 goto :success
