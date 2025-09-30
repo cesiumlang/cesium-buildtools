@@ -32,7 +32,7 @@ if exist %CMAKE_EXE_WIN% (for /F "tokens=3" %%g in ('%CMAKE_EXE_WIN% --version')
 if not "%CMAKE_VER_TMP%" == "%CMAKE_VERSION%" (
   echo %YELLOWTEXT%CMake version does not match.  Setting up CMake.%DEFAULTTEXT%
   if not exist %CMAKE_ZIP_WIN% (curl -o %CMAKE_ZIP_WIN% -L https://github.com/Kitware/CMake/releases/download/v%CMAKE_VERSION%/cmake-%CMAKE_VERSION%-windows-x86_64.zip || goto :curlfail)
-  cd %ROOTBIN_WIN%
+  cd %ROOTOPT_WIN%
   if exist %CMAKE_DIR_WIN% (rmdir /S /Q %CMAKE_DIR_WIN%)
   echo tar extracting Cmake...
   tar -xmSf %CMAKE_ZIP_WIN% || goto :tarfail

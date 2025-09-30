@@ -30,17 +30,17 @@ set VULKAN_MAINT_EXE_WIN=%retval%
 set VULKAN_VER_TMP=
 if exist %VULKAN_MAINT_EXE_WIN% (
   setlocal EnableDelayedExpansion
-  for /F "tokens=*" %%v in ('%VULKAN_MAINT_EXE_WIN% list ^| findstr /C:"com.lunarg.vulkan"') do (
-    for /F "tokens=1 delims=/" %%a in ("%%v") do set "VULKAN_VER_TMP2=%%a"
-    set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:* version=!"
-    for /F "tokens=1 delims==" %%a in ("!VULKAN_VER_TMP2!") do set "VULKAN_VER_TMP2=%%a"
-    set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:"=!"
-    for /F %%x in ("!VULKAN_VER_TMP2!") do (
-      endlocal
-      set "VULKAN_VER_TMP=%%x"
+    for /F "tokens=*" %%v in ('%VULKAN_MAINT_EXE_WIN% list ^| findstr /C:"com.lunarg.vulkan"') do (
+      for /F "tokens=1 delims=/" %%a in ("%%v") do set "VULKAN_VER_TMP2=%%a"
+      set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:* version=!"
+      for /F "tokens=1 delims==" %%a in ("!VULKAN_VER_TMP2!") do set "VULKAN_VER_TMP2=%%a"
+      set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:"=!"
+      for /F %%x in ("!VULKAN_VER_TMP2!") do (
+        endlocal
+        set "VULKAN_VER_TMP=%%x"
+      )
+      goto :checkvulkan
     )
-    goto :checkvulkan
-  )
   endlocal
 )
 :checkvulkan
@@ -52,6 +52,7 @@ if not "%VULKAN_VER_TMP%" == "%VULKAN_VERSION%" (
   :: https://sdk.lunarg.com/sdk/download/latest/windows/vulkan_sdk.exe
   :: https://sdk.lunarg.com/sdk/download/1.4.321.1/windows/vulkansdk-windows-X64-1.4.321.1.exe
   if not exist %VULKAN_SDK_EXE_WIN% (curl -o %VULKAN_SDK_EXE_WIN% -L https://sdk.lunarg.com/sdk/download/%VULKAN_VERSION%/windows/%VULKAN_LONGNAME%.exe || goto :curlfail)
+  if exist %VULKAN_DIR_WIN% (rmdir /S /Q %VULKAN_DIR_WIN%)
   cd %ROOTOPT_WIN%
   %VULKAN_SDK_EXE_WIN% --root %VULKAN_DIR_WIN% --accept-licenses --default-answer --confirm-command install %COPYONLY% || goto :installfail
 )
@@ -69,11 +70,6 @@ exit /b 3
 :installfail
 echo %REDTEXT%install failure%DEFAULTTEXT%
 exit /b 4
-
-
-:set_version
-set "VULKAN_VER_TMP=%~1"
-exit /b
 
 :success
 cd %ROOT_WIN%

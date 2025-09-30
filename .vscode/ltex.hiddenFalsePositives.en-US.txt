@@ -1,1 +1,2 @@
 {"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qdownloading portable versions of CMake, Ninja, and LLVM as necessary.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qcesium-buildtools\\E$"}

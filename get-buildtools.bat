@@ -49,6 +49,7 @@ set ROOTBUILD_WIN=%retval%
 
 mkdir %DOWNLOADS_WIN%
 mkdir %ROOTBIN_WIN%
+mkdir %ROOTOPT_WIN%
 @REM mkdir %ROOTBUILD_WIN%
 @REM mklink /d %ROOTBUILD_WIN%\lib %CESIUM_SRC_WIN%\lib
 

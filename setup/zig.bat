@@ -32,6 +32,7 @@ if exist %ZIG_EXE_WIN% (for /F "tokens=*" %%g in ('%ZIG_EXE_WIN% version') do (
 if not "%ZIG_VER_TMP%" == "%ZIG_VERSION%" (
   echo %YELLOWTEXT%Zig version does not match.  Setting up Zig.%DEFAULTTEXT%
   if not exist %ZIG_ZIP_WIN% (curl -o %ZIG_ZIP_WIN% -L https://ziglang.org/download/%ZIG_VERSION%/zig-x86_64-windows-%ZIG_VERSION%.zip || goto :curlfail)
+  if exist %ZIG_DIR_WIN% (rmdir /S /Q %ZIG_DIR_WIN%)
   cd %ROOTOPT_WIN%
   echo tar extracting Zig...
   tar -xmSf %ZIG_ZIP_WIN% || goto :tarfail
