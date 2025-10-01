@@ -9,52 +9,50 @@ set QtTarget=msvc2022_64
 @REM call utils\normalize_path %Qt6_ROOT%
 @REM set Qt6_ROOT_WIN=%retval%
 
-:: precompute version
+:: precompute paths and file names
 set QtVersionCompact=%QtVersion:.=%
-
-@REM :: test if admin
-@REM set COPYONLY=
-@REM net session >nul 2>&1 || set COPYONLY=copy_only=1
+set QT_LONGNAME=qt.qt6.%QtVersionCompact%.win64_%QtTarget%
+set QT_NAME=qt-%QtVersion%
 
 :: Make sure to use forward slashes (/) for all path separators
 :: (otherwise CMake will try to interpret backslashes as escapes and fail).
 :: We will assume all paths are POSIX except those ending in `_WIN`.
-set QT_INSTALL_EXE=%DOWNLOADS_WIN%/qt-online-installer-windows-x64-online.exe
+set QT_INSTALL_EXE=%DOWNLOADS%/qt-online-installer-windows-x64-online.exe
 call utils\normalize_path %QT_INSTALL_EXE%
 set QT_INSTALL_EXE_WIN=%retval%
 
-set Qt6_ROOT=%ROOTOPT%/qt-%QtVersion%
+set Qt6_ROOT=%ROOTOPT%/%QT_NAME%
 call utils\normalize_path %Qt6_ROOT%
 set Qt6_ROOT_WIN=%retval%
 
-set QT_MAINT_EXE=%Qt6_ROOT%/maintenancetool.exe
+set QT_MAINT_EXE=%Qt6_ROOT%/MaintenanceTool.exe
 call utils\normalize_path %QT_MAINT_EXE%
 set QT_MAINT_EXE_WIN=%retval%
 
 set QT_AUTH=%APPDATA%\Qt\qtaccount.ini
 set QTEMAILFILE=%ROOT_WIN%\.qtemail
 set QTPASSFILE=%ROOT_WIN%\.qtpassword
-set QT_ARGS=--root %Qt6_ROOT_WIN% --accept-obligations --accept-licenses --default-answer --confirm-command install qt.qt6.%QtVersionCompact%.win64_%QtTarget%
+set QT_ARGS=--root %Qt6_ROOT_WIN% --accept-obligations --accept-licenses --default-answer --confirm-command install %QT_LONGNAME%
 
 set QT_VER_TMP=
 if exist %QT_MAINT_EXE_WIN% (
   setlocal EnableDelayedExpansion
-  for /F "tokens=*" %%v in ('%QT_MAINT_EXE_WIN% list ^| findstr /C:"com.lunarg.vulkan"') do (
-    for /F "tokens=1 delims=/" %%a in ("%%v") do set "VULKAN_VER_TMP2=%%a"
-    set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:* version=!"
-    for /F "tokens=1 delims==" %%a in ("!VULKAN_VER_TMP2!") do set "VULKAN_VER_TMP2=%%a"
-    set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:"=!"
-    for /F %%x in ("!VULKAN_VER_TMP2!") do (
-      endlocal
-      set "VULKAN_VER_TMP=%%x"
-    )
+  for /F "tokens=*" %%v in ('%QT_MAINT_EXE_WIN% list ^| findstr /C:"%QT_LONGNAME%"') do (
+    for /F "tokens=1 delims=/" %%a in ("%%v") do set "QT_VER_TMP2=%%a"
+    set "QT_VER_TMP2=!QT_VER_TMP2:* version=!"
+    for /F "tokens=1 delims==" %%a in ("!QT_VER_TMP2!") do set "QT_VER_TMP2=%%a"
+    set "QT_VER_TMP2=!QT_VER_TMP2:"=!"
+    for /F "tokens=1 delims=-" %%a in ("!QT_VER_TMP2!") do set "QT_VER_TMP2=%%a"
+    for /F %%x in ("!QT_VER_TMP2!") do (endlocal & set "QT_VER_TMP=%%x")
     goto :checkqt
   )
+  :: only gets here if the version not found in first for
   endlocal
 )
 :checkqt
 if not "%QT_VER_TMP%" == "%QtVersion%" (
   echo %YELLOWTEXT%Qt version does not match.  Setting up Qt.%DEFAULTTEXT%
+  exit /b 1
   if not exist %QT_INSTALL_EXE_WIN% (curl -o %QT_INSTALL_EXE_WIN% -L https://download.qt.io/official_releases/online_installers/qt-online-installer-windows-x64-online.exe || goto :curlfail)
   if exist %Qt6_ROOT_WIN% (rmdir /S /Q %Qt6_ROOT_WIN%)
   cd %ROOTOPT_WIN%

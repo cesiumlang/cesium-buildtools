@@ -11,7 +11,7 @@ set CMAKE_NAME=cmake-%CMAKE_VERSION%
 :: Make sure to use forward slashes (/) for all path separators
 :: (otherwise CMake will try to interpret backslashes as escapes and fail).
 :: We will assume all paths are POSIX except those ending in `_WIN`.
-set CMAKE_ZIP=%DOWNLOADS_WIN%/%CMAKE_NAME%.zip
+set CMAKE_ZIP=%DOWNLOADS%/%CMAKE_NAME%.zip
 call utils\normalize_path %CMAKE_ZIP%
 set CMAKE_ZIP_WIN=%retval%
 

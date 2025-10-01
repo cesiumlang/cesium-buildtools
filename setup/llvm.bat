@@ -15,7 +15,7 @@ set LLVM=%ROOTOPT%/%LLVM_NAME%
 call utils\normalize_path %LLVM%
 set LLVM_WIN=%retval%
 
-set LLVM_ZIP=%DOWNLOADS_WIN%/%LLVM_NAME%.zip
+set LLVM_ZIP=%DOWNLOADS%/%LLVM_NAME%.zip
 call utils\normalize_path %LLVM_ZIP%
 set LLVM_ZIP_WIN=%retval%
 

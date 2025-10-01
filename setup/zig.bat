@@ -15,7 +15,7 @@ set ZIG_DIR=%ROOTOPT%/%ZIG_NAME%
 call utils\normalize_path %ZIG_DIR%
 set ZIG_DIR_WIN=%retval%
 
-set ZIG_ZIP=%DOWNLOADS_WIN%/%ZIG_LONGNAME%.zip
+set ZIG_ZIP=%DOWNLOADS%/%ZIG_LONGNAME%.zip
 call utils\normalize_path %ZIG_ZIP%
 set ZIG_ZIP_WIN=%retval%
 

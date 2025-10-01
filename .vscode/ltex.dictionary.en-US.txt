@@ -17,5 +17,7 @@ qtaccount
 qtemail
 qtpassword
 setlocal
+toolchain
+usebackq
 winify
 xcopy

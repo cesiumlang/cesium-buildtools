@@ -7,7 +7,7 @@ set NINJA_VERSION=1.13.1
 :: Make sure to use forward slashes (/) for all path separators
 :: (otherwise CMake will try to interpret backslashes as escapes and fail).
 :: We will assume all paths are POSIX except those ending in `_WIN`.
-set NINJA_ZIP=%DOWNLOADS_WIN%/ninja-%NINJA_VERSION%-win.zip
+set NINJA_ZIP=%DOWNLOADS%/ninja-%NINJA_VERSION%-win.zip
 call utils\normalize_path %NINJA_ZIP%
 set NINJA_ZIP_WIN=%retval%
 

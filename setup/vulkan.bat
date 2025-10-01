@@ -10,12 +10,12 @@ set VULKAN_NAME=vulkansdk-%VULKAN_VERSION%
 
 :: test if admin
 set COPYONLY=
-net session >nul 2>&1 || set COPYONLY=copy_only=1
+if %ADMIN_PRIV%==1 (set COPYONLY=copy_only=1)
 
 :: Make sure to use forward slashes (/) for all path separators
 :: (otherwise CMake will try to interpret backslashes as escapes and fail).
 :: We will assume all paths are POSIX except those ending in `_WIN`.
-set VULKAN_SDK_EXE=%DOWNLOADS_WIN%/%VULKAN_LONGNAME%.exe
+set VULKAN_SDK_EXE=%DOWNLOADS%/%VULKAN_LONGNAME%.exe
 call utils\normalize_path %VULKAN_SDK_EXE%
 set VULKAN_SDK_EXE_WIN=%retval%
 
@@ -30,17 +30,15 @@ set VULKAN_MAINT_EXE_WIN=%retval%
 set VULKAN_VER_TMP=
 if exist %VULKAN_MAINT_EXE_WIN% (
   setlocal EnableDelayedExpansion
-    for /F "tokens=*" %%v in ('%VULKAN_MAINT_EXE_WIN% list ^| findstr /C:"com.lunarg.vulkan"') do (
-      for /F "tokens=1 delims=/" %%a in ("%%v") do set "VULKAN_VER_TMP2=%%a"
-      set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:* version=!"
-      for /F "tokens=1 delims==" %%a in ("!VULKAN_VER_TMP2!") do set "VULKAN_VER_TMP2=%%a"
-      set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:"=!"
-      for /F %%x in ("!VULKAN_VER_TMP2!") do (
-        endlocal
-        set "VULKAN_VER_TMP=%%x"
-      )
-      goto :checkvulkan
-    )
+  for /F "tokens=*" %%v in ('%VULKAN_MAINT_EXE_WIN% list ^| findstr /C:"com.lunarg.vulkan"') do (
+    for /F "tokens=1 delims=/" %%a in ("%%v") do set "VULKAN_VER_TMP2=%%a"
+    set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:* version=!"
+    for /F "tokens=1 delims==" %%a in ("!VULKAN_VER_TMP2!") do set "VULKAN_VER_TMP2=%%a"
+    set "VULKAN_VER_TMP2=!VULKAN_VER_TMP2:"=!"
+    for /F %%x in ("!VULKAN_VER_TMP2!") do (endlocal & set "VULKAN_VER_TMP=%%x")
+    goto :checkvulkan
+  )
+  :: only gets here if the version not found in first for
   endlocal
 )
 :checkvulkan
