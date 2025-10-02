@@ -10,7 +10,8 @@ set INCLUDE_ZIG=1
 set INCLUDE_QT=1
 set INCLUDE_VULKAN=1
 set INCLUDE_MINIFORGE=0
-set INCLUDE_GIT=0
+set INCLUDE_GIT=1
+set INCLUDE_NODE=1
 
 set FORCE_MINIFORGE=0
 set FORCE_GIT=0
@@ -61,6 +62,10 @@ if not "%~1"=="" (
   ) else if "%1"=="--force-git" (
     set INCLUDE_GIT=1
     set FORCE_GIT=1
+  ) else if "%1"=="--node" (
+    set INCLUDE_NODE=1
+  ) else if "%1"=="--no-node" (
+    set INCLUDE_NODE=0
   )
   set "LASTARG=%1"
   shift
@@ -116,6 +121,7 @@ if %INCLUDE_QT%==1 (call setup\qt || goto :fail)
 if %INCLUDE_VULKAN%==1 (call setup\vulkan || goto :fail)
 if %INCLUDE_MINIFORGE%==1 (call setup\miniforge || goto :fail)
 if %INCLUDE_GIT%==1 (call setup\git || goto :fail)
+if %INCLUDE_NODE%==1 (call setup\node || goto :fail)
 
 :: for now, just download and then exit
 goto :success

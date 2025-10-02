@@ -32,6 +32,11 @@ set QT_MAINT_EXE_WIN=%retval%
 set QT_AUTH=%APPDATA%\Qt\qtaccount.ini
 set QTEMAILFILE=%ROOT_WIN%\.qtemail
 set QTPASSFILE=%ROOT_WIN%\.qtpassword
+
+@REM :: test if admin
+@REM set COPYONLY=
+@REM if %ADMIN_PRIV%==1 (set COPYONLY=copy_only=1)
+
 set QT_ARGS=--root %Qt6_ROOT_WIN% --accept-obligations --accept-licenses --default-answer --confirm-command install %QT_LONGNAME%
 
 set QT_VER_TMP=
@@ -52,7 +57,6 @@ if exist %QT_MAINT_EXE_WIN% (
 :checkqt
 if not "%QT_VER_TMP%" == "%QtVersion%" (
   echo %YELLOWTEXT%Qt version does not match.  Setting up Qt.%DEFAULTTEXT%
-  exit /b 1
   if not exist %QT_INSTALL_EXE_WIN% (curl -o %QT_INSTALL_EXE_WIN% -L https://download.qt.io/official_releases/online_installers/qt-online-installer-windows-x64-online.exe || goto :curlfail)
   if exist %Qt6_ROOT_WIN% (rmdir /S /Q %Qt6_ROOT_WIN%)
   cd %ROOTOPT_WIN%
