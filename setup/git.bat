@@ -80,4 +80,4 @@ git update-git-for-windows -y
 
 :success
 cd %ROOT_WIN%
-endlocal & set PATH=%MINIFORGE_DIR_WIN%\miniforge3\condabin;%PATH%
+endlocal
