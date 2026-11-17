@@ -1,26 +1,50 @@
 # cesium-buildtools
 
-A collection of scripts to automate building the [Cesium](https://cesiumlang.org) compiler from source.
+Windows scripts that install the tools and libraries for working on [Cesium](https://cesiumlang.org) that the [Cesium devkit](https://github.com/cesiumlang/devkits) does not contain.
 
-Currently, this is only written for Windows, but eventually it will also support other platforms.
+The devkit holds the pinned Zig (the C compiler and build system), the LLVM and LLD libraries, and QBE. The Cesium compiler is built with those alone; see the [cesium](https://github.com/cesiumlang/cesium) repository. These scripts cover the rest of a Windows setup.
 
-The scripts in this repo address<!-- cloning the [Cesium source repo](https://github.com/cesiumlang/cesium.git) (as a submodule),  -->
-downloading portable versions of CMake, Ninja, LLVM, etc., as necessary.
-<!-- and then checks out a known good commit of Cesium to do the build.   -->
-It also locally sets `$PATH` to a minimal set of values due to issues with other libraries installed on the machine polluting the build.
+If your machine already has these tools, you do not need this repository.
+
+## What it installs
+
+| Tool | Default | Option | Where |
+| --- | --- | --- | --- |
+| Qt 6.8.0 (`msvc2022_64`) | on | `--qt`, `--no-qt` | `opt/qt-6.8.0` |
+| Vulkan SDK 1.4.321.1 | on | `--vulkan`, `--no-vulkan` | `opt/vulkansdk-1.4.321.1` |
+| Git for Windows (latest) | on | `--git`, `--no-git`, `--force-git` | system-wide |
+| Node.js 22.23.1 | on | `--node`, `--no-node` | `opt/node-22.23.1` |
+| Miniforge (latest) | off | `--miniforge`, `--no-miniforge`, `--force-miniforge` | `opt/miniforge3` |
+| CMake 4.1.1 | off | `--cmake`, `--no-cmake` | `opt/cmake-4.1.1` |
+| Clang and LLVM 21.1.0 | off | `--llvm`, `--no-llvm` | `opt/llvm-21.1.0` |
+| Ninja 1.13.1 | off | `--ninja`, `--no-ninja` | `bin` |
+| Zig 0.17.1 | off | `--zig`, `--no-zig` | `opt/zig-0.17.1` |
+
+The last four are off because the devkit provides the Zig and LLVM that Cesium is built with, and nothing in the Cesium build uses CMake or Ninja. The LLVM here is the upstream release with Clang, not the devkit's LLVM.
+
+Git is installed system-wide, or updated if it is already installed. Everything else stays inside this directory.
 
 ## Usage
 
-<!-- 1. Install the [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-sdk/). -->
-1. If you do not already have one, [create a Qt account](https://login.qt.io/register)
-2. If you have successfully installed Qt with this account before on this computer, you do not need to do the login steps since your credentials are saved by Qt after your first successful login.
-3. If you have not logged into Qt from an installer before, create a file in the root of this repo called `.qtemail` and put your Qt account email on the first line.  Also create a file in the root of this repo called `.qtpassword` and put your Qt account password on the first line in plaintext.  Note that these files are optional, and the absence of either one will prompt you for the missing information interactively.  After the script completes successfully, you may delete these files since the credentials will be stored by Qt encrypted.
-4. Run `get-buildtools`, which will set up the build environment.
+Run `buildtools.bat` from a Command Prompt in this directory.
 
-## Background
+| Option | Effect |
+| --- | --- |
+| `--export-path` | Leave the `PATH` the script built in the calling shell. |
+| `--echo-path` | Print that `PATH` at the end. |
 
-These scripts are initially developed to simply codify the steps to get a build environment, ensure repeatability, and, perhaps, easing future CI builds or other automation.
+The script sets `PATH` to a minimal list before it installs anything, so that libraries installed elsewhere on the machine do not affect the tools it sets up.
 
-I intentionally do not set `@echo off` for the Windows scripts because all of this is still very much in development, and it is a useful debugging tool to see exactly what commands go with what terminal outputs or see what variable expansions and substitutions are happening.
+### Qt account
 
-Tar commands have the additional `-mS` flags added.  This is because I tried to compile on exFAT flash storage, which doesn't fully support POSIX-like file attributes.  The `-m` prevents trying to update the last modified time, while `-S` allows it to handle sparse files more efficiently (which seems to be important due to how the devkit tar file is constructed I suppose; this may not actually be necessary, but did seem to help performance)
+The Qt installer needs a Qt account.
+
+1. If you do not have one, [create a Qt account](https://login.qt.io/register).
+2. If you have installed Qt with this account on this computer before, Qt has saved your credentials, and no login is needed.
+3. Otherwise, either let the script ask for your email and password, or put the email on the first line of a file `.qtemail` and the password on the first line of a file `.qtpassword`, both in this directory. Git ignores both files. Delete them after the script succeeds: Qt stores the credentials encrypted from then on.
+
+## Notes
+
+The `tar` commands use `-mS`. `-m` does not restore modification times, which fail on exFAT storage. `-S` handles sparse files efficiently.
+
+Only Windows is covered.

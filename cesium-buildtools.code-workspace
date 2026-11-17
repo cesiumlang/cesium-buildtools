@@ -1,19 +1,42 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"files.watcherExclude": {
-			"clang+llvm-*/": true,
-			"llvm-*/": true,
-			"bin/zig-*/": true,
-			"bin/zig-x86_64-windows-*/": true,
-			"bin/cmake-*-windows-x86_64/**": true,
-			"bin/cmake-*/**": true,
-			"opt/**": true,
-			"build/CMakeFiles/**": true,
-		}
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "downloads/**": true,
+    },
+    "files.watcherExclude": {
+      "bin/**": true,
+      "downloads/**": true,
+      "opt/**": true,
+    },
+    "search.exclude": {
+      "bin/**": true,
+      "downloads/**": true,
+      "opt/**": true,
+    },
+    "files.associations": {
+      "VERSION": "plaintext",
+      ".local-gitignore": "gitignore",
+      ".github/workflows/exempt.txt": "gitignore",
+      ".clangd": "yaml",
+      "**/.claude/projects/*/memory/*.md": "plaintext",
+    },
+    "files.insertFinalNewline": true,
+    "terminal.integrated.automationProfile.windows": {
+      "path": "C:\\windows\\system32\\cmd.exe",
+    },
+    "ltex.additionalRules.motherTongue": "en-US",
+  },
+  "extensions": {
+    "recommendations": [
+      "streetsidesoftware.code-spell-checker",
+      "streetsidesoftware.code-spell-checker-scientific-terms",
+      "streetsidesoftware.code-spell-checker-win32",
+      "ltex-plus.vscode-ltex-plus",
+    ]
+  }
 }
