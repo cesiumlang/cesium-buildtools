@@ -4,7 +4,7 @@ setlocal
 @REM https://github.com/coreybutler/nvm-windows/releases/latest/download/nvm-setup.exe
 
 :: check the version before running!
-set NODE_VERSION=24.9.0
+set NODE_VERSION=22.23.1
 
 :: precompute paths and file names
 set NODE_LONGNAME=node-v%NODE_VERSION%-win-x64
@@ -26,12 +26,12 @@ call utils\normalize_path %NODE_EXE%
 set NODE_EXE_WIN=%retval%
 
 set NODE_VER_TMP=
-if exist %NODE_EXE_WIN% (for /F "tokens=3" %%g in ('%NODE_EXE_WIN% --version') do (
+if exist %NODE_EXE_WIN% (for /F "tokens=*" %%g in ('%NODE_EXE_WIN% --version') do (
   set NODE_VER_TMP=%%g
   goto :checknode
 ))
 :checknode
-if not "%NODE_VER_TMP%" == "%NODE_VERSION%" (
+if not "%NODE_VER_TMP%" == "v%NODE_VERSION%" (
   echo %YELLOWTEXT%Node version does not match.  Setting up Node.%DEFAULTTEXT%
   if not exist %NODE_ZIP_WIN% (curl -o %NODE_ZIP_WIN% -L https://nodejs.org/download/release/v%NODE_VERSION%/node-v%NODE_VERSION%-win-x64.zip || goto :curlfail)
   cd %ROOTOPT_WIN%

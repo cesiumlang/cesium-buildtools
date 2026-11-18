@@ -37,4 +37,4 @@ exit /b 4
 
 :success
 cd %ROOT_WIN%
-endlocal & set PATH=%MINIFORGE_DIR_WIN%\miniforge3\condabin;%PATH%
+endlocal & set PATH=%MINIFORGE_DIR_WIN%\condabin;%PATH%

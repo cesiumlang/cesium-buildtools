@@ -2,7 +2,7 @@
 setlocal
 
 :: check the version before running!
-set ZIG_VERSION=0.15.1
+set ZIG_VERSION=0.17.1
 
 :: precompute paths and file names
 set ZIG_LONGNAME=zig-x86_64-windows-%ZIG_VERSION%
