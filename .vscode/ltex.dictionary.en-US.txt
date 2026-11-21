@@ -13,6 +13,7 @@ MAINT
 Miniforge
 mkhl
 msvc
+MSYS
 qtaccount
 qtemail
 QTEMAILFILE
