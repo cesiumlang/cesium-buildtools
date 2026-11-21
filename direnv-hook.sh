@@ -2,7 +2,11 @@
 # direnv for Git Bash: source this file from ~/.bashrc. It is direnv's own
 # hook (direnv hook bash) with the direnv in opt/ and PATH kept in Git Bash's
 # form. Does nothing when no direnv is installed.
-source "$(dirname "${BASH_SOURCE[0]}")/utils/direnv_load.sh"
+_direnv_hook_dir=${BASH_SOURCE[0]%/*}
+[ "$_direnv_hook_dir" != "${BASH_SOURCE[0]}" ] || _direnv_hook_dir=.
+# shellcheck source=utils/direnv_load.sh
+source "$_direnv_hook_dir/utils/direnv_load.sh"
+unset _direnv_hook_dir
 
 if _direnv_exe=$(direnv_find); then
   _direnv_hook () {
