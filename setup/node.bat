@@ -4,7 +4,7 @@ setlocal
 @REM https://github.com/coreybutler/nvm-windows/releases/latest/download/nvm-setup.exe
 
 :: check the version before running!
-set NODE_VERSION=22.23.1
+set NODE_VERSION=24.22.3
 
 :: precompute paths and file names
 set NODE_LONGNAME=node-v%NODE_VERSION%-win-x64

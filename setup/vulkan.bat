@@ -2,15 +2,15 @@
 setlocal
 
 :: check the version before running!
-set VULKAN_VERSION=1.4.321.1
+set VULKAN_VERSION=1.4.363.1
 
 :: precompute paths and file names
 set VULKAN_LONGNAME=vulkansdk-windows-X64-%VULKAN_VERSION%
 set VULKAN_NAME=vulkansdk-%VULKAN_VERSION%
 
-:: test if admin
-set COPYONLY=
-if %ADMIN_PRIV%==1 (set COPYONLY=copy_only=1)
+:: always copy only: no system VULKAN_SDK, PATH or registry changes, so the
+:: SDK stays inside buildtools and a system-wide SDK is left alone
+set COPYONLY=copy_only=1
 
 :: Make sure to use forward slashes (/) for all path separators
 :: (otherwise CMake will try to interpret backslashes as escapes and fail).
@@ -71,4 +71,4 @@ exit /b 4
 
 :success
 cd %ROOT_WIN%
-endlocal & set PATH=%VULKAN_DIR_WIN%\bin;%PATH%
+endlocal & set PATH=%VULKAN_DIR_WIN%\bin;%PATH%& set VULKAN_SDK=%VULKAN_DIR_WIN%
