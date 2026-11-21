@@ -65,21 +65,14 @@ source /c/cesium/workspace/cesium-src/buildtools/direnv-hook.sh
 
 ### VS Code
 
-The [direnv extension](https://marketplace.visualstudio.com/items?itemName=mkhl.direnv) (`mkhl.direnv`) loads the `.envrc` of the workspace into the editor, its terminals and its extensions. It needs three things that a VS Code started from the Start menu does not have. Started from Git Bash with the hook above (`code .` in the workspace) it has all three; otherwise give them in the user settings:
+Start VS Code from a shell that has the environment: `code .` in the workspace, from a Git Bash with the hook above. The editor, its terminals and its extensions then have what the `.envrc` files give.
 
-```json
-"direnv.path.executable": "C:\\cesium\\workspace\\cesium-src\\buildtools\\opt\\direnv-2.38.2\\direnv.exe",
-"direnv.extraEnv": {
-  "HOME": "C:\\Users\\<you>",
-  "DIRENV_BASH": "C:\\Program Files\\Git\\usr\\bin\\bash.exe"
-}
-```
+The [direnv extension](https://marketplace.visualstudio.com/items?itemName=mkhl.direnv) (`mkhl.direnv`) is not recommended on Windows (emanspeaks, 2026-11-21). Tried with version 0.17.0 and direnv 2.37.1, it needs three settings before it starts at all, and then asks to allow the `.envrc` again and again:
 
-- **direnv itself:** the path must end in `.exe`. A direnv without it (as an MSYS2 shell runs happily) is reported as "command not found".
-- **A home:** direnv keeps its settings and its list of approved `.envrc` files under `HOME`, which Windows does not set; without it, it stops with "couldn't find a configuration directory". Give the home of the shell you run `direnv allow` in, so that the editor and the shell share one list. Set it here, in `direnv.extraEnv`, which only direnv sees: as a Windows environment variable, `HOME` moves the home of MSYS2 and of other tools.
-- **A bash:** direnv runs `.envrc` files with the first `bash` on `PATH`, which outside Git Bash is the WSL launcher in `System32`. Git's and MSYS2's (`C:\msys64\usr\bin\bash.exe`) both work.
+- **Settings:** `direnv.path.executable` must name a direnv whose name ends in `.exe`; and `direnv.extraEnv` must give `HOME` (Windows sets none, and direnv stops with "couldn't find a configuration directory") and `DIRENV_BASH` (the first `bash` on a Windows `PATH` is the WSL launcher in `System32`).
+- **The loop:** VS Code names the folder with a lowercase drive letter (`c:\...`), and the extension runs direnv there. direnv looks an `.envrc` up among the approved ones by its path as it is written, so it looks for `c:\...\.envrc`; the extension's "Allow" records `C:\...\.envrc`. The approval is never found. `direnv allow`, run in a process whose working directory is written with the lowercase letter, records the one that is looked for, and has to be run again after every change to an `.envrc`.
 
-The `.envrc` files here use only what bash has built in, since that bash is started with the editor's `PATH`, which has no `dirname`, `sort` or `tail`.
+The `.envrc` files here use only what bash has built in, so they load whatever `PATH` direnv is started with: a bash started by the extension has no `dirname`, `sort` or `tail`.
 
 ## Notes
 
