@@ -1,13 +1,17 @@
 buildtools
+certutil
 cesium-buildtools
 checkllvm
 checkqt
 comspec
 DEFAULTTEXT
+direnv
+envrc
 GREENTEXT
 lunarg
 MAINT
 Miniforge
+mkhl
 msvc
 qtaccount
 qtemail

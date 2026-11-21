@@ -13,6 +13,7 @@ set INCLUDE_MINIFORGE=0
 set INCLUDE_GIT=1
 set INCLUDE_NODE=1
 set INCLUDE_TREESITTER=1
+set INCLUDE_DIRENV=1
 
 set FORCE_MINIFORGE=0
 set FORCE_GIT=0
@@ -71,6 +72,10 @@ if not "%~1"=="" (
     set INCLUDE_TREESITTER=1
   ) else if "%1"=="--no-tree-sitter" (
     set INCLUDE_TREESITTER=0
+  ) else if "%1"=="--direnv" (
+    set INCLUDE_DIRENV=1
+  ) else if "%1"=="--no-direnv" (
+    set INCLUDE_DIRENV=0
   )
   set "LASTARG=%1"
   shift
@@ -128,6 +133,7 @@ if %INCLUDE_MINIFORGE%==1 (call setup\miniforge || goto :fail)
 if %INCLUDE_GIT%==1 (call setup\git || goto :fail)
 if %INCLUDE_NODE%==1 (call setup\node || goto :fail)
 if %INCLUDE_TREESITTER%==1 (call setup\tree-sitter || goto :fail)
+if %INCLUDE_DIRENV%==1 (call setup\direnv || goto :fail)
 
 :: for now, just download and then exit
 goto :success
