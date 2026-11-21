@@ -65,10 +65,21 @@ source /c/cesium/workspace/cesium-src/buildtools/direnv-hook.sh
 
 ### VS Code
 
-The [direnv extension](https://marketplace.visualstudio.com/items?itemName=mkhl.direnv) (`mkhl.direnv`) loads the `.envrc` of the workspace into the editor, its terminals and its extensions. It needs two things that a VS Code started from the Start menu does not have:
+The [direnv extension](https://marketplace.visualstudio.com/items?itemName=mkhl.direnv) (`mkhl.direnv`) loads the `.envrc` of the workspace into the editor, its terminals and its extensions. It needs three things that a VS Code started from the Start menu does not have. Started from Git Bash with the hook above (`code .` in the workspace) it has all three; otherwise give them in the user settings:
 
-- **Finding direnv:** start VS Code from Git Bash with the hook above (`code .` in the workspace), so that direnv is on `PATH`, or set `direnv.path.executable` in the user settings to the `direnv.exe` in `opt/`.
-- **Finding Git Bash:** direnv runs `.envrc` files with the first `bash` on `PATH`, which outside Git Bash is the WSL launcher in `System32`. Started from Git Bash, VS Code has Git's `bash` first; otherwise set `DIRENV_BASH` to `C:\Program Files\Git\usr\bin\bash.exe`, or put `bash_path = "C:/Program Files/Git/usr/bin/bash.exe"` in direnv's `direnv.toml`.
+```json
+"direnv.path.executable": "C:\\cesium\\workspace\\cesium-src\\buildtools\\opt\\direnv-2.38.2\\direnv.exe",
+"direnv.extraEnv": {
+  "HOME": "C:\\Users\\<you>",
+  "DIRENV_BASH": "C:\\Program Files\\Git\\usr\\bin\\bash.exe"
+}
+```
+
+- **direnv itself:** the path must end in `.exe`. A direnv without it (as an MSYS2 shell runs happily) is reported as "command not found".
+- **A home:** direnv keeps its settings and its list of approved `.envrc` files under `HOME`, which Windows does not set; without it, it stops with "couldn't find a configuration directory". Give the home of the shell you run `direnv allow` in, so that the editor and the shell share one list. Set it here, in `direnv.extraEnv`, which only direnv sees: as a Windows environment variable, `HOME` moves the home of MSYS2 and of other tools.
+- **A bash:** direnv runs `.envrc` files with the first `bash` on `PATH`, which outside Git Bash is the WSL launcher in `System32`. Git's and MSYS2's (`C:\msys64\usr\bin\bash.exe`) both work.
+
+The `.envrc` files here use only what bash has built in, since that bash is started with the editor's `PATH`, which has no `dirname`, `sort` or `tail`.
 
 ## Notes
 

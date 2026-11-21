@@ -1,6 +1,10 @@
 # shellcheck shell=bash
 # Sourced by direnv-hook.sh and by the Claude Code hook of cesium-workspace.
-source "$(dirname "${BASH_SOURCE[0]}")/newest_opt.sh"
+_direnv_load_dir=${BASH_SOURCE[0]%/*}
+[ "$_direnv_load_dir" != "${BASH_SOURCE[0]}" ] || _direnv_load_dir=.
+# shellcheck source=newest_opt.sh
+source "$_direnv_load_dir/newest_opt.sh"
+unset _direnv_load_dir
 
 # direnv_find: print the direnv on PATH, else the newest in opt/; fail when
 # there is none.
