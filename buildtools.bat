@@ -7,11 +7,13 @@ set INCLUDE_CMAKE=0
 set INCLUDE_LLVM=0
 set INCLUDE_NINJA=0
 set INCLUDE_ZIG=0
-set INCLUDE_QT=1
+set INCLUDE_QT=0
 set INCLUDE_VULKAN=1
 set INCLUDE_MINIFORGE=0
 set INCLUDE_GIT=1
 set INCLUDE_NODE=1
+set INCLUDE_TREESITTER=1
+set INCLUDE_DIRENV=1
 
 set FORCE_MINIFORGE=0
 set FORCE_GIT=0
@@ -66,6 +68,14 @@ if not "%~1"=="" (
     set INCLUDE_NODE=1
   ) else if "%1"=="--no-node" (
     set INCLUDE_NODE=0
+  ) else if "%1"=="--tree-sitter" (
+    set INCLUDE_TREESITTER=1
+  ) else if "%1"=="--no-tree-sitter" (
+    set INCLUDE_TREESITTER=0
+  ) else if "%1"=="--direnv" (
+    set INCLUDE_DIRENV=1
+  ) else if "%1"=="--no-direnv" (
+    set INCLUDE_DIRENV=0
   )
   set "LASTARG=%1"
   shift
@@ -122,6 +132,8 @@ if %INCLUDE_VULKAN%==1 (call setup\vulkan || goto :fail)
 if %INCLUDE_MINIFORGE%==1 (call setup\miniforge || goto :fail)
 if %INCLUDE_GIT%==1 (call setup\git || goto :fail)
 if %INCLUDE_NODE%==1 (call setup\node || goto :fail)
+if %INCLUDE_TREESITTER%==1 (call setup\tree-sitter || goto :fail)
+if %INCLUDE_DIRENV%==1 (call setup\direnv || goto :fail)
 
 :: for now, just download and then exit
 goto :success
@@ -132,5 +144,5 @@ utils\failure
 :success
 echo %GREENTEXT%Cesium buildtools environment successfully built and up to date!%DEFAULTTEXT%
 cd %ROOT_WIN%
-if %EXPORT_PATH%==1 (endlocal & set PATH=%PATH%)
+if %EXPORT_PATH%==1 (endlocal & set PATH=%PATH%& set VULKAN_SDK=%VULKAN_SDK%)
 if %ECHO_PATH%==1 echo PATH=%PATH%
